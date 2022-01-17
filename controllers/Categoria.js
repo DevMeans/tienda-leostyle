@@ -23,7 +23,9 @@ const actualizarCategoria = async (req = request, res = response) => {
         msg: `Categoria actualizada correctamente`
     })
 }
+
 module.exports = {
     crearCategoria,
     actualizarCategoria
+
 }
