@@ -1,20 +1,23 @@
 const { request, response } = require("express")
 const Usuario = require("../models/Usuario")
-const { generarpwd } = require("../helpers/generadores");
-const crearUsuario = (req = request, res = response) => {
-    const { password, estado, ...newBody } = req.body
+const { generarpwd, generarjwt } = require("../helpers/generadores");
+const crearUsuario =  async (req = request, res = response) => {
+    const { password, estado,rol, ...newBody } = req.body
     newBody.password = generarpwd(password)
     const usuarioDB = new Usuario(newBody)
-    usuarioDB.save()
+    const token =  await generarjwt(usuarioDB.id)
+    console.log(usuarioDB.id)
+    await usuarioDB.save()
     return res.json({
         results: usuarioDB,
+        token,
         ok: true,
-        msg: `Estas en el crear usuario`
+        msg: `usuarioCreando`
     })
 }
 const actualizarUsuario = async (req = request, res = response) => {
     const { id } = req.params
-    const { password, estado, ...newBody } = req.body
+    const { password, estado,rol, ...newBody } = req.body
     if (!password) {
         delete newBody.password
     } else {

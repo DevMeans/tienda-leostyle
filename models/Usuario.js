@@ -4,7 +4,8 @@ const { Schema, model } = require('mongoose');
 const usuarioSchema = Schema({
     correo: {
         type: String,
-        required: [true, 'el correo es obligatorio']
+        required: [true, 'el correo es obligatorio'],
+        unique:true
     },
     nombre: {
         type: String,
@@ -17,6 +18,10 @@ const usuarioSchema = Schema({
     estado: {
         type: Boolean,
         default: true
+    },
+    rol:{
+        type:String,
+        default:'INVITADO_ROLE'
     }
 
 

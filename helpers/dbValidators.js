@@ -8,6 +8,13 @@ const validaridCategoria = async (id = '') => {
         throw new Error(`el id ${id} no existe ne la base de datos`)
     }
 }
+const validarCorreo =async (correo='')=>{
+    const existeCorreo = await Usuario.findOne({correo})
+    if(existeCorreo){
+        throw new Error(`el correo ${correo} ya existe en la base de datos`)
+    }
+}
 module.exports = {
-    validaridCategoria
+    validaridCategoria,
+    validarCorreo
 }
