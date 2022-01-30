@@ -5,7 +5,7 @@ const { request, response } = require("express")
 const validarjwt=(req=request,res=response,next)=>{
     const token = req.header('x-token');
     if(!token){
-        return res.status(404).json({
+        return res.status(403).json({
             ok:false,
             msg:`token no valido`
         })

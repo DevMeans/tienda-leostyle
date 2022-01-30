@@ -32,10 +32,12 @@ const renovarToken = async (req = request, res = response) => {
     const id = req.uid
     //console.log(id)
     const token = await generarjwt(id)
+    const usuario=await Usuario.findById(id)
     res.json({
         ok: true,
         msg: 'Estas en el renovar token',
-        token
+        token,
+        usuario
     })
 }
 module.exports = {

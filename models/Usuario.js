@@ -22,6 +22,9 @@ const usuarioSchema = Schema({
     rol:{
         type:String,
         default:'INVITADO_ROLE'
+    },img:{
+        type:String,
+        default:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpPqXR6PsGstMJ8xcGyLbEuCgVui9ISk2AaQ&usqp=CAU'
     }
 
 
