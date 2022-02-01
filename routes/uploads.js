@@ -9,9 +9,9 @@ router.post('/', [
 
 ], expressFileUploads)
 router.put('/:coleccion/:id', [
-
+    validarjwt,
     check('id', 'No es un id valido').isMongoId(),
-    check('coleccion').custom(c => coleccionesPermitidas(c, ['usuarios', 'productos', 'categoria'])),
+    check('coleccion').custom(c => coleccionesPermitidas(c, ['usuarios', 'productos', 'categorias'])),
     validarCampos
 ], actualizarImagenCloudynary)
 /*

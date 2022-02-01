@@ -84,39 +84,55 @@ const actualizarImagenCloudynary = async (req = request, res = response) => {
         });
     }
     switch (coleccion) {
-        case 'usuario':
+        case 'usuarios':
             modelo = await Usuario.findById(id)
             if (!modelo) {
                 return res.status(400).json({
+                    ok: false,
                     msg: `No existe un usuario con el id ${id}`
                 })
             }
             break;
-        case 'categoria':
+        case 'categorias':
             modelo = await Categoria.findById(id)
             if (!modelo) {
                 return res.status(400).json({
+                    ok: false,
                     msg: `No existe la categoria con el id ${id}`
                 })
             }
             break;
         default:
-            return res.status(500).json({ msg: 'Aun no se programa esa accion' })
+            return res.status(500).json({
+                ok: false,
+                msg: 'Aun no se programa esa accion'
+            })
     }
 
     if (modelo.img) {
         const nombrearr = modelo.img.split('/');
-        const nombre = nombrearr[nombrearr.length -1 ]
-        const [public_id] =nombre.split('.')
+        const nombre = nombrearr[nombrearr.length - 1]
+        const [public_id] = nombre.split('.')
         cloudinary.uploader.destroy(public_id)
     }
+    const extencionesPermitidas = ['png', 'jpg', 'jpeg', 'gif']
     const { tempFilePath } = req.files.img
-    const { secure_url } = await cloudinary.uploader.upload(tempFilePath)
-    modelo.img = secure_url
-    await modelo.save();
-    res.json({
-        modelo
-    })
+    console.log()
+    const extValida = req.files.img.mimetype.split('/')[1]
+    if (extencionesPermitidas.includes(extValida)) {
+        const { secure_url } = await cloudinary.uploader.upload(tempFilePath)
+        modelo.img = secure_url
+        await modelo.save();
+        res.json({
+            ok: true,
+            results: modelo
+        })
+    } else {
+        res.status(403).json({
+            ok: false,
+            msg: `solo se permiten archivos ${extencionesPermitidas}`
+        })
+    }
 
 }
 
