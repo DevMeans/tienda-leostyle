@@ -21,8 +21,15 @@ const coleccionesPermitidas = (coleccion = '', colecciones = []) => {
     }
     return true
 }
+const validaridUsuario = async (id = '') => {
+    const usuarioid = await Usuario.findById(id)
+    if (!usuarioid) {
+        throw new Error('el usuario no existe')
+    }
+}
 module.exports = {
     validaridCategoria,
     validarCorreo,
-    coleccionesPermitidas
+    coleccionesPermitidas,
+    validaridUsuario
 }

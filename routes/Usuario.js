@@ -1,10 +1,19 @@
 const Router = require("express");
 const { check } = require("express-validator");
-const { crearUsuario, actualizarUsuario } = require("../controllers/Usuario");
-const { validarCorreo } = require("../helpers/dbValidators");
+const { crearUsuario, actualizarUsuario, mostrarUsuarios, cambiarEstado, EliminarUsuario, cambiarRol } = require("../controllers/Usuario");
+const { validarCorreo, validaridUsuario } = require("../helpers/dbValidators");
 const { validarjwt } = require("../middlewares/validaciones");
 const { validarCampos } = require("../middlewares/validar-campos");
 const router = Router();
+
+router.get('/:desde/:limite', [
+    validarjwt,
+    validarCampos
+
+],
+    mostrarUsuarios
+)
+
 router.post('/', [
     check('nombre', 'El nombre es obligatorio').notEmpty(),
     check('correo', 'El correo es obligatorio').notEmpty(),
@@ -20,4 +29,22 @@ router.put('/:id', [
     validarCampos
 
 ], actualizarUsuario)
+router.put('/estado/:id', [
+    validarjwt,
+    check('id').custom(validaridUsuario),
+    validarCampos
+],
+    cambiarEstado)
+router.put('/rol/:id', [
+    validarjwt,
+    check('id').custom(validaridUsuario),
+    validarCampos
+],
+    cambiarRol)
+router.delete('/:id', [
+    validarjwt,
+    check('id').custom(validaridUsuario),
+
+    validarCampos
+], EliminarUsuario)
 module.exports = router
