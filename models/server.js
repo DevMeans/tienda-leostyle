@@ -11,7 +11,8 @@ class Server {
             auth: '/api/auth/login',
             categoria: '/api/categoria',
             uploads: '/api/subirimagen',
-            busqueda: '/api/busqueda'
+            busqueda: '/api/busqueda',
+            producto: '/api/producto'
         }
         this.cnnMongo()
         this.middlewares()
@@ -35,6 +36,7 @@ class Server {
         this.app.use(this.rutas.categoria, require('../routes/Categoria'))
         this.app.use(this.rutas.uploads, require("../routes/uploads"))
         this.app.use(this.rutas.busqueda, require('../routes/busqueda'))
+        this.app.use(this.rutas.producto, require('../routes/producto'))
     }
     listen() {
         this.app.listen(this.port, () => console.log(`Estamos en el puerto :  ${this.port}!`))

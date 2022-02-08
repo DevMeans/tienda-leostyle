@@ -1,4 +1,5 @@
 const { request, response } = require("express")
+const Categoria = require("../models/Categoria")
 const Usuario = require("../models/Usuario")
 const buscarPorColeccion = async (req = request, res = response) => {
     const tabla = req.params.tabla
@@ -15,11 +16,12 @@ const buscarPorColeccion = async (req = request, res = response) => {
             })
             break;
         case 'categorias':
-            data = await Usuario.find({ nombre: regex })
+            data = await Categoria.find({ nombre: regex })
             res.json({
                 ok: true,
                 results: data
             })
+            break;
         default:
             return res.status(400).json({
                 ok: false,
