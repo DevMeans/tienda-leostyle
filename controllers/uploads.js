@@ -108,7 +108,6 @@ const actualizarImagenCloudynary = async (req = request, res = response) => {
                 msg: 'Aun no se programa esa accion'
             })
     }
-
     if (modelo.img) {
         const nombrearr = modelo.img.split('/');
         const nombre = nombrearr[nombrearr.length - 1]

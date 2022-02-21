@@ -1,4 +1,5 @@
 const Categoria = require("../models/Categoria")
+const Producto = require("../models/Producto")
 const Usuario = require("../models/Usuario")
 
 
@@ -27,9 +28,17 @@ const validaridUsuario = async (id = '') => {
         throw new Error('el usuario no existe')
     }
 }
+const validarNombreProducto = async (nombre = '') => {
+    const existeNombre = await Producto.findOne({ nombre })
+    if (existeNombre) {
+        throw new Error(`El nombre ${nombre} ya existe`)
+    }
+}
 module.exports = {
     validaridCategoria,
     validarCorreo,
     coleccionesPermitidas,
-    validaridUsuario
+    validaridUsuario,
+    validarNombreProducto
+
 }
